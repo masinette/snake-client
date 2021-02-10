@@ -6,7 +6,7 @@ const name = "TSK";
  * Establishes connection with the game server
  */
 
-const connect = function () {
+const connect = function() {
   const conn = net.createConnection({
     host: '135.23.222.131',
     port: 50542
