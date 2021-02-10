@@ -1,43 +1,35 @@
 const net = require('net');
+const connect = require('./client');
+
 const stdin = process.stdin;
 const name = "SNAKE";
 
-/**
- * Establishes connection with the game server
- */
-const connect = function () {
-  const conn = net.createConnection({
-    host: '135.23.222.131',
-    port: 50542
-  });
-  // interpret incoming data as text
-  conn.setEncoding('utf8');
 
-  // conn.write(JSON.stringify({ name }));
-  // stdin.on('data', (input) => {
-  //   conn.write(JSON.stringify({ name, input }));
-  // });
-
-  conn.on('data', (data) => {
-    let parsedData = JSON.parse(data);
-    console.log("\x1b[34m", `${parsedData.name} Said: `, parsedData.input);
-  });
-
-
-
-  return conn;
-};
 
 console.log('Connecting ...');
 connect();
 
-// connect.conn.on('data', (data) => {
-//   parsedData = JSON.parse(data);
-//   console.log("\x1b[34m",`${parsedData.name} Said: `, parsedData.input);
-// });
 
-/*
-Vasily server
-PORT: 50542
-HOST: 135.23.222.131
-*/
+/**
+ * Setup User Interface
+ * Specifically, so that we can handle user input via stdin
+ */
+
+//set ctrl + c as the exit key, to exit program in Node, and terminate the game
+//this is the data callback handler for stdin
+const handleUserInput = ('data', (key) => {
+  // \u0003 maps to ctrl+c input
+  if (key === '\u0003') {
+    process.exit();
+  }
+});
+//setup input from user
+const setupInput = function () {
+  const stdin = process.stdin;
+  stdin.setRawMode(true);
+  stdin.setEncoding('utf8');
+  stdin.resume();
+  return stdin;
+};
+
+setupInput();
