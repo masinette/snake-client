@@ -32,9 +32,9 @@ const connect = function() {
     // console.log("Successfully connected to game server");
 
     // conn.write(name);
-    setInterval(() => {
-      conn.write("Move: down");
-    }, 50);
+    // setInterval(() => {
+    //   conn.write("Move: down");
+    // }, 50);
 
   });
 
@@ -54,4 +54,4 @@ HOST: 135.23.222.131
 "Move: right" - move left one square (unless facing left)
 */
 
-module.exports = connect;
+module.exports = { connect };
